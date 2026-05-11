@@ -105,7 +105,7 @@ Current PM2 app name:
 
 Documented backend PM2 config:
 
-- [backend/ecosystem.config.js](/K:/ClaudeProjects/Octopus-Referral/internal-webapp/backend/ecosystem.config.js)
+- [backend/ecosystem.config.js]
 
 ## Key Operational Dependencies
 
