@@ -1,0 +1,495 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CSS CUSTOM PROPERTIES — THEME TOKENS
+   Dark mode is the default (no data-theme attribute).
+   Light mode is activated by applyTheme('light') which sets data-theme="light"
+   on <html>. This avoids the invert(1) filter hack that broke emojis and hues.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Octopus brand backgrounds */
+  --oc-bg-base:    #150E38;   /* body / popup shell */
+  --oc-bg-card:    #2E2252;   /* card / panel surfaces */
+  --oc-bg-deep:    #0d0924;   /* nav bar / deepest layer */
+  --oc-bg-inner:   #150E38;   /* inner cells inside cards */
+  --oc-bg-input:   #1a1240;   /* disabled input fields */
+
+  /* Text */
+  --oc-text-primary:   #e5e7eb;   /* gray-200 — body text */
+  --oc-text-secondary: #d1d5db;   /* gray-300 — sub-labels */
+  --oc-text-muted:     #6b7280;   /* gray-500/600 — hints */
+  --oc-text-faint:     #4b5563;   /* gray-600 — very muted */
+  --oc-text-white:     #ffffff;
+  --oc-text-heading:   #ffffff;
+
+  /* Brand accent */
+  --oc-pink:         #f472b6;   /* pink-400 — links, active tabs */
+  --oc-pink-btn:     #db2777;   /* pink-600 — buttons */
+  --oc-pink-btn-h:   #ec4899;   /* pink-500 — button hover */
+
+  /* Semantic rate colours (kept fully-saturated — these MUST NOT invert) */
+  --oc-rate-low:    #2dd4bf;   /* teal-400 */
+  --oc-rate-mid:    #facc15;   /* yellow-400 */
+  --oc-rate-high:   #f87171;   /* red-400 */
+
+  /* Carbon intensity colours */
+  --oc-ci-low:      #4ade80;   /* green-400 */
+  --oc-ci-mid:      #facc15;   /* yellow-400 */
+  --oc-ci-high:     #fb923c;   /* orange-400 */
+  --oc-ci-vhigh:    #f87171;   /* red-400 */
+
+  /* Misc accent */
+  --oc-purple-label: #c4b5fd;  /* purple-300 — section labels */
+  --oc-cyan-label:   #67e8f9;  /* cyan-300 — section labels */
+  --oc-teal-badge:   #99f6e4;  /* teal-300 — kW badges */
+  --oc-teal-badge-bg: rgba(19,78,74,0.5); /* teal-900/50 */
+
+  /* Borders */
+  --oc-border:       rgba(255,255,255,0.10);
+  --oc-border-faint: rgba(255,255,255,0.05);
+
+  /* Header */
+  --oc-header-bg:    rgba(156,111,255,0.20);
+
+  /* Alert banner */
+  --oc-alert-red-bg:     rgba(127,29,29,0.60);
+  --oc-alert-red-border: rgba(185,28,28,0.40);
+  --oc-alert-red-text:   #fecaca;
+}
+
+/* ─── LIGHT MODE OVERRIDES ───────────────────────────────────────────────────
+   Applied when applyTheme('light') sets data-theme="light" on <html>.
+   We redefine only the tokens that need to change. Emoji, SVG, and inline
+   images are untouched because we are NOT using a CSS filter on the document.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+[data-theme="light"] {
+  /* Backgrounds flip to pale variants of the brand palette */
+  --oc-bg-base:    #f5f3ff;   /* very pale violet — matches Octopus light identity */
+  --oc-bg-card:    #ede9fe;   /* violet-100 */
+  --oc-bg-deep:    #7c3aed;   /* violet-700 — nav bar gets a solid brand colour */
+  --oc-bg-inner:   #ddd6fe;   /* violet-200 — inner cells */
+  --oc-bg-input:   #ede9fe;   /* violet-100 — disabled inputs */
+
+  /* Text flips to dark */
+  --oc-text-primary:   #1e1b4b;   /* indigo-950 */
+  --oc-text-secondary: #3730a3;   /* indigo-800 */
+  --oc-text-muted:     #6d28d9;   /* violet-700 */
+  --oc-text-faint:     #7c3aed;   /* violet-600 */
+  --oc-text-white:     #1e1b4b;
+  --oc-text-heading:   #1e1b4b;
+
+  /* Pink stays vivid but slightly darker for legibility on light bg */
+  --oc-pink:         #be185d;   /* pink-700 */
+  --oc-pink-btn:     #be185d;   /* pink-700 */
+  --oc-pink-btn-h:   #9d174d;   /* pink-800 */
+
+  /* Rate colours — use darker shades for legibility on light backgrounds */
+  --oc-rate-low:    #0f766e;   /* teal-700 */
+  --oc-rate-mid:    #a16207;   /* yellow-700 */
+  --oc-rate-high:   #b91c1c;   /* red-700 */
+
+  /* Carbon */
+  --oc-ci-low:      #15803d;   /* green-700 */
+  --oc-ci-mid:      #a16207;   /* yellow-700 */
+  --oc-ci-high:     #c2410c;   /* orange-700 */
+  --oc-ci-vhigh:    #b91c1c;   /* red-700 */
+
+  /* Accent labels */
+  --oc-purple-label: #6d28d9;
+  --oc-cyan-label:   #0e7490;
+  --oc-teal-badge:   #0f766e;
+  --oc-teal-badge-bg: rgba(204,251,241,0.8);
+
+  /* Borders */
+  --oc-border:       rgba(109,40,217,0.20);
+  --oc-border-faint: rgba(109,40,217,0.10);
+
+  /* Header */
+  --oc-header-bg:    rgba(124,58,237,0.15);
+
+  /* Alert banner */
+  --oc-alert-red-bg:     rgba(254,226,226,0.90);
+  --oc-alert-red-border: rgba(239,68,68,0.40);
+  --oc-alert-red-text:   #991b1b;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE LAYER — apply theme tokens to document elements
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--oc-bg-base);
+    color: var(--oc-text-primary);
+  }
+
+  :focus-visible {
+    outline: 2px solid #f472b6;
+    outline-offset: 2px;
+  }
+
+  section {
+    scroll-margin-top: 80px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   COMPONENT LAYER
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@layer components {
+  .octopus-gradient-bg {
+    background: linear-gradient(135deg, var(--oc-bg-base), var(--oc-bg-card));
+  }
+
+  .octopus-card-bg {
+    background-color: var(--oc-bg-card);
+  }
+
+  .octopus-text-gradient {
+    background: -webkit-linear-gradient(45deg, #FF47A0, #00A69C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cta-button {
+    @apply transition-all duration-300;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .card {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LIGHT MODE — background colour overrides
+   These rules use [data-theme="light"] so they only fire in light mode.
+   Dark mode classes win by default (no data-theme attribute = no conflict).
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Dark arbitrary hex backgrounds → light equivalents ── */
+[data-theme="light"] .bg-\[\#150E38\]   { background-color: var(--oc-bg-base)  !important; }
+[data-theme="light"] .bg-\[\#0d0924\]   { background-color: var(--oc-bg-deep)  !important; }
+[data-theme="light"] .bg-\[\#2E2252\]   { background-color: var(--oc-bg-card)  !important; }
+[data-theme="light"] .bg-\[\#1a1240\]   { background-color: var(--oc-bg-input) !important; }
+[data-theme="light"] .bg-\[\#1e1740\]   { background-color: var(--oc-bg-card)  !important; } /* GlobalSearch modal */
+
+/* ── Tailwind named dark backgrounds that need to flip light ── */
+[data-theme="light"] .bg-gray-900\/50  { background-color: var(--oc-bg-card)  !important; }
+[data-theme="light"] .bg-gray-900      { background-color: #e8e4fb !important; }  /* dropdown panels */
+[data-theme="light"] .bg-gray-800      { background-color: var(--oc-bg-card)  !important; }  /* dropdown hover */
+[data-theme="light"] .bg-gray-700      { background-color: #ddd6fe !important; }
+
+/* octopus-card-bg / octopus-gradient-bg are defined via CSS vars above — body/body covers it */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LIGHT MODE — text colour overrides
+   NOTE: .text-white is NOT overridden globally. The nav bar uses an inline style
+   (rgba(156,111,255,0.26)) which we handle separately, and dropdown menus use
+   bg-gray-900 which we flip to #e8e4fb above — text-white on that reads fine
+   as dark indigo (#1e1b4b) set on body. So we ONLY override text-white on the
+   specific lightened card surfaces where it would be invisible.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Gray text scale ── */
+[data-theme="light"] .text-gray-100  { color: #1e1b4b !important; }
+[data-theme="light"] .text-gray-200  { color: var(--oc-text-primary)   !important; }
+[data-theme="light"] .text-gray-300  { color: var(--oc-text-secondary) !important; }
+
+/* ── text-white: only override where the background has been explicitly lightened ──
+   We target the popup shell + octopus card surfaces + page headings.
+   The nav bar, dropdown menus, and GlobalSearch keep white text on their
+   dark/violet backgrounds — they still look right. */
+[data-theme="light"] .octopus-card-bg .text-white    { color: #1e1b4b !important; }
+[data-theme="light"] .octopus-gradient-bg .text-white { color: #1e1b4b !important; }
+[data-theme="light"] .bg-\[\#2E2252\] .text-white    { color: #1e1b4b !important; }
+[data-theme="light"] .bg-\[\#150E38\] .text-white    { color: #1e1b4b !important; }
+[data-theme="light"] main > header .text-white        { color: #1e1b4b !important; } /* page h1s */
+[data-theme="light"] main .text-white:not(nav *)      { color: #1e1b4b !important; } /* body content, not nav children */
+
+/* ── Rate & semantic colours — dark enough for light card bg ── */
+[data-theme="light"] .text-teal-400   { color: var(--oc-rate-low)  !important; }
+[data-theme="light"] .text-yellow-400 { color: var(--oc-rate-mid)  !important; }
+[data-theme="light"] .text-red-400    { color: var(--oc-rate-high) !important; }
+
+/* ── Carbon intensity colours ── */
+[data-theme="light"] .text-green-400  { color: var(--oc-ci-low)   !important; }
+[data-theme="light"] .text-orange-400 { color: var(--oc-ci-high)  !important; }
+
+/* ── Section/label accent colours ── */
+[data-theme="light"] .text-purple-300 { color: var(--oc-purple-label) !important; }
+[data-theme="light"] .text-cyan-300   { color: var(--oc-cyan-label)   !important; }
+[data-theme="light"] .text-teal-300   { color: var(--oc-teal-badge)   !important; }
+[data-theme="light"] .bg-teal-900\/50 { background-color: var(--oc-teal-badge-bg) !important; }
+[data-theme="light"] .text-orange-300 { color: #9a3412 !important; }
+[data-theme="light"] .text-amber-300  { color: #92400e !important; }
+[data-theme="light"] .text-cyan-400   { color: var(--oc-cyan-label) !important; }
+
+/* ── Pink accent — links, active nav, buttons ── */
+[data-theme="light"] .text-pink-400        { color: var(--oc-pink)     !important; }
+[data-theme="light"] .text-pink-300        { color: var(--oc-pink)     !important; }
+[data-theme="light"] .text-pink-500        { color: var(--oc-pink-btn) !important; }
+[data-theme="light"] .hover\:text-pink-300:hover  { color: var(--oc-pink-btn-h) !important; }
+[data-theme="light"] .hover\:text-pink-500:hover  { color: var(--oc-pink-btn-h) !important; }
+[data-theme="light"] .bg-pink-600                  { background-color: var(--oc-pink-btn)   !important; }
+[data-theme="light"] .bg-pink-500                  { background-color: var(--oc-pink-btn-h) !important; }
+[data-theme="light"] .hover\:bg-pink-500:hover     { background-color: var(--oc-pink-btn-h) !important; }
+[data-theme="light"] .hover\:bg-pink-400:hover     { background-color: var(--oc-pink-btn)   !important; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   OPTIONS SPA NAV & DROPDOWN
+   The Header nav uses an inline style for its background (rgba purple glass),
+   which CSS cannot override. On light mode the glass tint is too pale, so we
+   override the sticky nav directly.
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-theme="light"] nav.sticky {
+  background-color: rgba(124, 58, 237, 0.90) !important;  /* solid violet-700 at 90% */
+  backdrop-filter: blur(8px) !important;
+}
+/* Nav link text stays white on the violet nav bar */
+[data-theme="light"] nav.sticky .text-white    { color: #ffffff !important; }
+[data-theme="light"] nav.sticky .text-gray-300 { color: rgba(255,255,255,0.65) !important; }
+[data-theme="light"] nav.sticky .border-white\/10  { border-color: rgba(255,255,255,0.20) !important; }
+[data-theme="light"] nav.sticky .border-white\/25  { border-color: rgba(255,255,255,0.40) !important; }
+[data-theme="light"] nav.sticky .hover\:text-white:hover { color: #ffffff !important; }
+[data-theme="light"] nav.sticky .hover\:text-pink-500:hover { color: #fbb6ce !important; }
+[data-theme="light"] nav.sticky .text-pink-500 { color: #fbb6ce !important; }
+[data-theme="light"] nav.sticky .text-pink-400 { color: #fbb6ce !important; }
+[data-theme="light"] nav.sticky .border-pink-400\/40 { border-color: rgba(251,182,206,0.4) !important; }
+
+/* Dropdown menu panel — bg-gray-900 becomes a light violet surface */
+[data-theme="light"] .bg-gray-900 {
+  background-color: #ede9fe !important;  /* violet-100 */
+}
+[data-theme="light"] .bg-gray-900 .text-gray-200 { color: #1e1b4b !important; }
+[data-theme="light"] .bg-gray-900 .hover\:bg-gray-800:hover { background-color: #ddd6fe !important; }
+/* Mobile menu borders */
+[data-theme="light"] .border-gray-700 { border-color: rgba(124,58,237,0.25) !important; }
+
+/* ── BottomNav bar (popup) ── */
+[data-theme="light"] nav.bg-\[\#0d0924\] {
+  background-color: var(--oc-bg-deep) !important;
+  border-top-color: rgba(124,58,237,0.30) !important;
+}
+/* Active tab text in light mode — keep it white (visible on violet nav) */
+[data-theme="light"] nav.bg-\[\#0d0924\] .text-pink-400 { color: #ffffff !important; }
+/* Inactive tab text */
+[data-theme="light"] nav.bg-\[\#0d0924\] .text-gray-300 { color: rgba(255,255,255,0.70) !important; }
+
+/* ── Borders — popup + options shared ── */
+[data-theme="light"] .border-white\/10  { border-color: var(--oc-border)       !important; }
+[data-theme="light"] .border-white\/5   { border-color: var(--oc-border-faint)  !important; }
+
+/* ── Form controls — popup (arbitrary-value classes) ── */
+[data-theme="light"] select.bg-\[\#2E2252\] {
+  background-color: var(--oc-bg-card) !important;
+  color: var(--oc-text-heading)       !important;
+  border-color: var(--oc-border)      !important;
+}
+[data-theme="light"] input.bg-\[\#2E2252\],
+[data-theme="light"] input.bg-\[\#1a1240\] {
+  background-color: var(--oc-bg-card) !important;
+  color: var(--oc-text-heading)       !important;
+  border-color: var(--oc-border)      !important;
+}
+
+/* ── Form controls — options SPA (Tailwind named classes on selects/inputs) ── */
+/* AgileTracker, TrackerPriceTracker, BillCalculator region selects */
+[data-theme="light"] select {
+  background-color: #ede9fe !important;  /* violet-100 */
+  color: #1e1b4b             !important;
+  border-color: rgba(109,40,217,0.30) !important;
+}
+[data-theme="light"] select option {
+  background-color: #ede9fe !important;
+  color: #1e1b4b             !important;
+}
+/* Date picker in AgileTracker (bg-white/10 text-white) */
+[data-theme="light"] input[type="date"] {
+  background-color: #ede9fe !important;
+  color: #1e1b4b             !important;
+  border-color: rgba(109,40,217,0.30) !important;
+  color-scheme: light;
+}
+/* Generic text inputs in options pages */
+[data-theme="light"] input[type="text"],
+[data-theme="light"] input[type="password"],
+[data-theme="light"] input[type="number"] {
+  background-color: #ede9fe !important;
+  color: #1e1b4b             !important;
+  border-color: rgba(109,40,217,0.30) !important;
+}
+/* bg-white/10 inputs (AgileTracker date nav buttons & misc) */
+[data-theme="light"] input.bg-white\/10 {
+  background-color: #ede9fe !important;
+  color: #1e1b4b             !important;
+  border-color: rgba(109,40,217,0.30) !important;
+}
+
+/* ── Alert banners ── */
+[data-theme="light"] .bg-red-900\/60    { background-color: var(--oc-alert-red-bg)     !important; }
+[data-theme="light"] .border-red-700\/40 { border-color:    var(--oc-alert-red-border)  !important; }
+[data-theme="light"] .text-red-200      { color: var(--oc-alert-red-text) !important; }
+
+/* ── Status/notification banners in Settings ── */
+[data-theme="light"] .bg-teal-900\/50   { background-color: rgba(204,251,241,0.8) !important; }
+[data-theme="light"] .border-teal-600\/40 { border-color: rgba(15,118,110,0.4)   !important; }
+[data-theme="light"] .text-teal-300     { color: #0f766e !important; }
+[data-theme="light"] .bg-yellow-900\/50  { background-color: rgba(254,249,195,0.8) !important; }
+[data-theme="light"] .border-yellow-600\/40 { border-color: rgba(202,138,4,0.4)  !important; }
+[data-theme="light"] .text-yellow-300   { color: #854d0e !important; }
+[data-theme="light"] .bg-purple-900\/40  { background-color: rgba(245,243,255,0.9) !important; }
+[data-theme="light"] .border-purple-600\/30 { border-color: rgba(124,58,237,0.3) !important; }
+[data-theme="light"] .text-purple-300   { color: #6d28d9 !important; }
+
+/* ── Hover states on card buttons (ToolsPage) ── */
+[data-theme="light"] .hover\:bg-purple-800:hover { background-color: #c4b5fd !important; }
+[data-theme="light"] .hover\:bg-purple-900:hover  { background-color: #ddd6fe !important; }
+
+/* ── Placeholder text ── */
+[data-theme="light"] .placeholder-gray-600::placeholder { color: #9ca3af !important; }
+
+/* ── Focus ring ── */
+[data-theme="light"] .focus\:border-pink-500:focus { border-color: var(--oc-pink-btn) !important; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   OPTIONS SPA PAGES — additional colour overrides
+   Covers reference pages (Agile/Tracker/Intelligent/OCPP/Cosy/Flux etc.)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Amber — warning callouts, "escalate" sections, peak period labels ── */
+[data-theme="light"] .text-amber-300  { color: #92400e !important; }   /* amber-900  */
+[data-theme="light"] .text-amber-400  { color: #b45309 !important; }   /* amber-700  */
+[data-theme="light"] .text-amber-200  { color: #92400e !important; }   /* amber-900  */
+[data-theme="light"] .text-amber-600  { color: #92400e !important; }   /* amber-900  */
+
+/* amber callout boxes (bg-amber-900/30, bg-amber-900/25, bg-amber-900/20) */
+[data-theme="light"] .bg-amber-900\/30  { background-color: rgba(255,251,235,0.95) !important; }
+[data-theme="light"] .bg-amber-900\/40  { background-color: rgba(255,251,235,0.95) !important; }
+[data-theme="light"] .bg-amber-900\/25  { background-color: rgba(255,251,235,0.90) !important; }
+[data-theme="light"] .bg-amber-900\/20  { background-color: rgba(255,251,235,0.85) !important; }
+[data-theme="light"] .bg-amber-900\/50  { background-color: rgba(255,251,235,0.95) !important; }
+[data-theme="light"] .bg-amber-400\/10  { background-color: rgba(251,191,36,0.15)  !important; }
+[data-theme="light"] .bg-amber-600      { background-color: #d97706               !important; }
+[data-theme="light"] .bg-amber-700      { background-color: #b45309               !important; }
+
+/* amber borders */
+[data-theme="light"] .border-amber-500\/30 { border-color: rgba(180,83,9,0.30)  !important; }
+[data-theme="light"] .border-amber-500\/20 { border-color: rgba(180,83,9,0.20)  !important; }
+[data-theme="light"] .border-amber-600\/30 { border-color: rgba(180,83,9,0.35)  !important; }
+[data-theme="light"] .border-amber-600\/40 { border-color: rgba(180,83,9,0.40)  !important; }
+[data-theme="light"] .border-amber-700\/40 { border-color: rgba(180,83,9,0.40)  !important; }
+[data-theme="light"] .border-amber-600\/60 { border-color: rgba(180,83,9,0.60)  !important; }
+[data-theme="light"] .border-amber-700\/60 { border-color: rgba(180,83,9,0.60)  !important; }
+[data-theme="light"] .border-amber-400\/30 { border-color: rgba(251,191,36,0.35) !important; }
+
+/* ── Blue — off-peak period labels (Flux), OCPP 1.6 version tags, rainfall ── */
+[data-theme="light"] .text-blue-300   { color: #1e40af !important; }   /* blue-800 */
+[data-theme="light"] .text-blue-400   { color: #1d4ed8 !important; }   /* blue-700 */
+[data-theme="light"] .text-blue-500   { color: #1d4ed8 !important; }   /* blue-700 */
+
+[data-theme="light"] .bg-blue-900\/50 { background-color: rgba(219,234,254,0.80) !important; }
+[data-theme="light"] .bg-blue-700     { background-color: #1d4ed8 !important; }
+[data-theme="light"] .border-blue-700\/40 { border-color: rgba(29,78,216,0.40) !important; }
+[data-theme="light"] .border-blue-700\/60 { border-color: rgba(29,78,216,0.60) !important; }
+[data-theme="light"] .border-blue-600     { border-color: #2563eb              !important; }
+
+/* ── Green — fuel mix labels, carbon good, teal-300 overrides ── */
+[data-theme="light"] .text-green-300  { color: #14532d !important; }   /* green-900 */
+[data-theme="light"] .text-green-400  { color: #166534 !important; }   /* green-800 */
+
+/* ── Orange — gas/heating labels ── */
+[data-theme="light"] .text-orange-300 { color: #9a3412 !important; }   /* orange-800 */
+
+/* ── Cyan — hydro, grid mix labels ── */
+[data-theme="light"] .text-cyan-300   { color: #164e63 !important; }   /* cyan-900 */
+[data-theme="light"] .text-cyan-400   { color: #0e7490 !important; }   /* cyan-700 */
+
+/* ── Purple / violet — nuclear fuel labels, section tags ── */
+[data-theme="light"] .text-purple-400 { color: #6d28d9 !important; }   /* violet-700 */
+[data-theme="light"] .text-purple-500 { color: #7c3aed !important; }
+
+/* ── Red — hard blocks, rate-high ── */
+[data-theme="light"] .text-red-400    { color: #b91c1c !important; }   /* red-700 */
+
+/* ── Semi-transparent white surfaces used in options pages ── */
+[data-theme="light"] .bg-white\/5   { background-color: rgba(109,40,217,0.06) !important; }
+[data-theme="light"] .bg-white\/10  { background-color: rgba(109,40,217,0.10) !important; }
+[data-theme="light"] .bg-white\/20  { background-color: rgba(109,40,217,0.15) !important; }
+[data-theme="light"] .border-white\/10 { border-color: rgba(109,40,217,0.15)  !important; }
+[data-theme="light"] .border-white\/20 { border-color: rgba(109,40,217,0.25)  !important; }
+[data-theme="light"] .hover\:bg-white\/10:hover { background-color: rgba(109,40,217,0.15) !important; }
+
+/* ── Gray utility overrides ─ ensure card surfaces look right in options ── */
+[data-theme="light"] .bg-gray-900\/50  { background-color: rgba(245,243,255,0.85) !important; }
+[data-theme="light"] .bg-gray-800      { background-color: var(--oc-bg-card)      !important; }
+[data-theme="light"] .text-gray-100    { color: var(--oc-text-heading)            !important; }
+
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+
+  nav,
+  footer,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  main {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .octopus-card-bg,
+  .octopus-gradient-bg,
+  .bg-white\/5,
+  .bg-white\/10,
+  .bg-\[\#150E38\],
+  .bg-\[\#2E2252\],
+  .bg-gray-900\/50 {
+    background: #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  * {
+    color: #111827 !important;
+    border-color: #d1d5db !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  table,
+  article,
+  section,
+  .octopus-card-bg {
+    break-inside: avoid;
+  }
+}
