@@ -1,4 +1,4 @@
-# internal-webapp
+# Octopus Energy Smart Products Helper App
 
 Smart Products knowledge hub for Octopus Energy specialists, plus a companion Chrome extension.
 All information used within this project is from either publicly available APIs or public information from the Octopus website or public API.
