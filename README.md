@@ -1,6 +1,7 @@
 # internal-webapp
 
-Internal Smart Products knowledge hub for Octopus Energy specialists, plus a companion Chrome extension.
+Smart Products knowledge hub for Octopus Energy specialists, plus a companion Chrome extension.
+All information used within this project is from either publicly available APIs or public information from the Octopus website or public API.
 
 This repository is aimed at internal staff workflows, not public users. From a TechOps perspective, it is a small multi-surface application made up of:
 
